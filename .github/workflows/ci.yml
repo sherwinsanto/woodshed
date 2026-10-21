@@ -22,6 +22,10 @@ jobs:
       - run: pip install -e ".[dev]"
       - run: ruff check .
       - run: ruff format --check .
+      # Integration tests need the same S3-compatible storage we use locally.
+      - name: Start storage
+        run: docker compose up -d --wait storage
+        working-directory: .
       - run: pytest
 
   worker:

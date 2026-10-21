@@ -36,7 +36,7 @@ React app ──upload──▶ FastAPI ──▶ object storage (S3-compatible)
 Requirements: Docker Desktop, Python 3.12, Node.js 24.
 
 ```bash
-# Database + API (http://localhost:8000/health)
+# Database, storage and API (http://localhost:8000/health)
 docker compose up --build
 
 # Frontend (http://localhost:5173)
@@ -53,8 +53,15 @@ python -m venv .venv
 .venv/Scripts/activate        # Windows (macOS/Linux: source .venv/bin/activate)
 pip install -e ".[dev]"
 uvicorn app.main:app --reload
-pytest
+pytest                        # storage tests run when `docker compose up -d storage` is running
 ```
+
+### Storage
+
+Audio never passes through the API. The browser uploads and downloads directly with
+**presigned URLs**: short-lived links, signed by the API, that allow one action on one
+file. Locally, [RustFS](https://github.com/rustfs/rustfs) stands in for Cloudflare R2;
+both speak the S3 API, so the same boto3 code works against either.
 
 ## Roadmap
 
