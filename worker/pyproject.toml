@@ -7,6 +7,8 @@ requires-python = ">=3.12"
 # CUDA (GPU) or CPU build is used; see worker/README.md.
 dependencies = [
     "demucs>=4.1",
+    # Demucs imports numpy but only declares it as a dependency on Intel Macs.
+    "numpy>=2",
     "torch>=2.6",
 ]
 

@@ -17,9 +17,9 @@ python -m venv .venv
 .venv/Scripts/activate              # macOS/Linux: source .venv/bin/activate
 
 # NVIDIA GPU (CUDA 13):
-pip install torch torchaudio --index-url https://download.pytorch.org/whl/cu130
+pip install torch --index-url https://download.pytorch.org/whl/cu130
 # ...or CPU only:
-pip install torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+pip install torch --index-url https://download.pytorch.org/whl/cpu
 
 pip install -e ".[dev]"
 ```
