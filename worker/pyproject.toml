@@ -1,0 +1,39 @@
+[project]
+name = "woodshed-worker"
+version = "0.1.0"
+description = "Splits songs into stems with Demucs"
+requires-python = ">=3.12"
+# PyTorch is installed separately from https://download.pytorch.org so the right
+# CUDA (GPU) or CPU build is used; see worker/README.md.
+dependencies = [
+    "demucs>=4.1",
+    "torch>=2.6",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "ruff>=0.8",
+]
+
+[project.scripts]
+woodshed-split = "woodshed_worker.separate:main"
+
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["woodshed_worker"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["slow: downloads the Demucs model and runs a real separation"]
+addopts = "-m 'not slow'"
